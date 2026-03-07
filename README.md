@@ -351,10 +351,6 @@ sequenceDiagram
 <img src="https://avatars.githubusercontent.com/yourusername" width="90" style="border-radius:50%"/>
 
 ### Akshat Srivastava
-
-[![GitHub](https://img.shields.io/badge/GitHub-yourusername-181717?style=for-the-badge&logo=github)](https://github.com/yourusername)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=for-the-badge&logo=linkedin)](https://linkedin.com/in/yourusername)
-
 *Built with ❤️ and a lot of `docker compose up`*
 
 </div>
