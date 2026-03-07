@@ -1,0 +1,32 @@
+version: "3"
+
+services:
+
+ mongo:
+  image: mongo
+  ports:
+   - "27017:27017"
+
+ backend:
+  build:
+   context: ..
+   dockerfile: docker/Dockerfile.backend
+  environment:
+   - MONGO_URI=mongodb://mongo:27017/devopsapp
+  depends_on:
+   - mongo
+
+ frontend:
+  build:
+   context: ..
+   dockerfile: docker/Dockerfile.frontend
+
+ nginx:
+  image: nginx
+  ports:
+   - "80:80"
+  volumes:
+   - ../nginx/default.conf:/etc/nginx/conf.d/default.conf
+  depends_on:
+   - backend
+   - frontend
