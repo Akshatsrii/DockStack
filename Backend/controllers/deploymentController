@@ -1,0 +1,37 @@
+const Deployment=require("../models/Deployment")
+
+exports.deployProject=async(req,res)=>{
+try{
+
+const {projectId}=req.body
+
+const deployment=await Deployment.create({
+project:projectId,
+status:"running",
+logs:"Deployment started"
+})
+
+setTimeout(async()=>{
+deployment.status="success"
+deployment.logs="Deployment completed"
+await deployment.save()
+},5000)
+
+res.json(deployment)
+
+}catch(error){
+res.status(500).json({error:error.message})
+}
+}
+
+exports.getDeployments=async(req,res)=>{
+try{
+
+const deployments=await Deployment.find().populate("project")
+
+res.json(deployments)
+
+}catch(error){
+res.status(500).json({error:error.message})
+}
+}
