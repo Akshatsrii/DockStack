@@ -1,22 +1,24 @@
-import {useEffect,useState} from "react"
+import {BrowserRouter,Routes,Route} from "react-router-dom"
+import Login from "./pages/Login"
+import Register from "./pages/Register"
+import Dashboard from "./pages/Dashboard"
+import Projects from "./pages/Projects"
+import Profile from "./pages/Profile"
+import Navbar from "./components/Navbar"
 
 function App(){
-
-const[data,setData]=useState("Loading")
-
-useEffect(()=>{
-fetch("/api/health")
-.then(res=>res.json())
-.then(data=>setData(data.status))
-},[])
-
 return(
-<div>
-<h1>DockStack DevOps Project</h1>
-<h2>{data}</h2>
-</div>
+<BrowserRouter>
+<Navbar/>
+<Routes>
+<Route path="/" element={<Login/>}/>
+<Route path="/register" element={<Register/>}/>
+<Route path="/dashboard" element={<Dashboard/>}/>
+<Route path="/projects" element={<Projects/>}/>
+<Route path="/profile" element={<Profile/>}/>
+</Routes>
+</BrowserRouter>
 )
-
 }
 
 export default App

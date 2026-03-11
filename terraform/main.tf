@@ -1,18 +1,15 @@
-provider "digitalocean" {
-  token = var.do_token
+provider "aws" {
+ region="ap-south-1"
 }
 
-resource "digitalocean_droplet" "server" {
-  image  = "ubuntu-22-04-x64"
-  name   = "dockstack-server"
-  region = "blr1"
-  size   = "s-1vcpu-1gb"
+resource "aws_instance" "dockstack_server" {
 
-  ssh_keys = [
-    var.ssh_fingerprint
-  ]
-}
+ ami="ami-0f5ee92e2d63afc18"
 
-output "server_ip" {
-  value = digitalocean_droplet.server.ipv4_address
+ instance_type="t2.micro"
+
+ tags={
+  Name="DockStackServer"
+ }
+
 }
