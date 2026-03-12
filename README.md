@@ -1,33 +1,43 @@
 <div align="center">
 
-<!-- TOP WAVE -->
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0f0c29,50:302b63,100:24243e&height=200&section=header&text=DockStack&fontSize=80&fontColor=ffffff&fontAlignY=38&desc=Full%20Stack%20DevOps%20Deployment%20Platform&descSize=22&descAlignY=60&descColor=a78bfa&animation=fadeIn" width="100%"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0a0a0f,30:0d1117,60:1a1f35,100:0f3460&height=220&section=header&text=DockStack&fontSize=90&fontColor=00d4ff&fontAlignY=40&desc=Full%20Stack%20DevOps%20Deployment%20Platform&descSize=24&descAlignY=63&descColor=7dd3fc&animation=fadeIn" width="100%"/>
 
-<!-- BADGES -->
+<br/>
+
 <p>
   <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white"/>
   <img src="https://img.shields.io/badge/Nginx-009639?style=for-the-badge&logo=nginx&logoColor=white"/>
   <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB"/>
   <img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white"/>
   <img src="https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white"/>
+</p>
+<p>
   <img src="https://img.shields.io/badge/Terraform-7B42BC?style=for-the-badge&logo=terraform&logoColor=white"/>
   <img src="https://img.shields.io/badge/Ansible-EE0000?style=for-the-badge&logo=ansible&logoColor=white"/>
   <img src="https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white"/>
+  <img src="https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white"/>
 </p>
+
+<br/>
 
 <p>
-  <img src="https://img.shields.io/github/stars/yourusername/dockstack-devops-platform?style=social"/>
-  <img src="https://img.shields.io/github/forks/yourusername/dockstack-devops-platform?style=social"/>
-  <img src="https://img.shields.io/github/license/yourusername/dockstack-devops-platform?color=violet"/>
-  <img src="https://img.shields.io/badge/Maintained-Yes-brightgreen"/>
-  <img src="https://img.shields.io/badge/PRs-Welcome-blueviolet"/>
+  <img src="https://img.shields.io/github/stars/yourusername/DockStack?style=social"/>
+  &nbsp;
+  <img src="https://img.shields.io/github/forks/yourusername/DockStack?style=social"/>
+  &nbsp;
+  <img src="https://img.shields.io/badge/License-MIT-00d4ff?style=flat"/>
+  &nbsp;
+  <img src="https://img.shields.io/badge/PRs-Welcome-7dd3fc?style=flat"/>
+  &nbsp;
+  <img src="https://img.shields.io/badge/Status-Active-00ff88?style=flat"/>
 </p>
 
 <br/>
 
-> 🚀 **A production-grade DevOps platform** demonstrating containerized deployments, infrastructure as code, automated CI/CD, and reverse proxy — all wired together in one cohesive project.
-
-<br/>
+<blockquote>
+<b>DockStack</b> is a production-grade DevOps platform that simplifies containerized deployments using Docker, Nginx, Terraform, Ansible, and GitHub Actions — all wired into one centralized pipeline.
+</blockquote>
 
 </div>
 
@@ -35,105 +45,128 @@
 
 ## 📌 Table of Contents
 
-- [🏗 Project Architecture](#-project-architecture)
-- [⚙️ Deployment Pipeline](#️-deployment-pipeline)
-- [🛠 Tech Stack](#-tech-stack)
+- [🚨 Problem Statement](#-problem-statement)
+- [💡 Solution](#-solution)
+- [🏗️ System Architecture](#️-system-architecture)
+- [🧰 Tech Stack](#-tech-stack)
 - [📁 Project Structure](#-project-structure)
-- [🚀 Getting Started](#-getting-started)
-- [📡 API Endpoints](#-api-endpoints)
-- [🌍 Terraform Infrastructure](#-terraform-infrastructure)
-- [🤖 Ansible Configuration](#-ansible-server-configuration)
-- [🔄 CI/CD Pipeline](#-cicd-deployment)
-- [✨ Features](#-features)
+- [⚙️ Installation & Setup](#️-installation--setup)
+- [🐳 Docker Setup](#-docker-setup)
+- [☁️ Infrastructure – Terraform](#️-infrastructure-setup-terraform)
+- [🤖 Server Config – Ansible](#-server-configuration-ansible)
+- [🔄 CI/CD Pipeline](#-cicd-pipeline)
+- [🔐 Authentication](#-authentication)
+- [📊 Features](#-features)
 - [🔮 Future Improvements](#-future-improvements)
+- [👨‍💻 Author](#-author)
+- [🤝 Contributing](#-contributing)
 
 ---
 
-## 🏗 Project Architecture
+## 🚨 Problem Statement
+
+Modern application deployment involves multiple steps and tools. Managing them manually is **time-consuming, error-prone, and overwhelming** — especially for developers new to DevOps.
 
 <div align="center">
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                        User Browser                         │
-│                     🌐 http://localhost                      │
-└───────────────────────────┬─────────────────────────────────┘
-                            │
-                            ▼
-┌─────────────────────────────────────────────────────────────┐
-│              🔀  Nginx  (Reverse Proxy :80)                 │
-└──────────────┬──────────────────────────┬───────────────────┘
-               │                          │
-               ▼                          ▼
-┌──────────────────────┐    ┌─────────────────────────────┐
-│  ⚛️  React Frontend  │    │  🟢 Node.js + Express API   │
-│     (Vite Build)     │    │   JWT Auth  •  REST Routes  │
-└──────────────────────┘    └──────────────┬──────────────┘
-                                           │
-                                           ▼
-                            ┌─────────────────────────┐
-                            │  🍃  MongoDB Database   │
-                            │  Users  •  Collections  │
-                            └─────────────────────────┘
-```
+| ❌ Pain Point | 😩 Impact |
+|:-------------|:---------|
+| Manual Docker container setup | Time wasted on repetitive config |
+| Complex server configuration | High chance of human error |
+| No centralized deployment management | Scattered tools, no visibility |
+| Difficult CI/CD pipeline setup | Slow release cycles |
+| Managing multiple services & environments | Inconsistent deployments |
 
 </div>
 
 ---
 
-## ⚙️ Deployment Pipeline
+## 💡 Solution
+
+**DockStack** provides a centralized DevOps platform that integrates all these tools into one seamless workflow.
+
+```
+✅  Manage projects from a unified dashboard
+✅  Deploy applications using Docker containers
+✅  Route traffic with Nginx reverse proxy
+✅  Provision cloud infrastructure with Terraform
+✅  Configure servers automatically with Ansible
+✅  Automate every deployment with GitHub Actions
+```
+
+---
+
+## 🏗️ System Architecture
 
 <div align="center">
 
 ```mermaid
 flowchart TD
-    A([👨‍💻 Developer]) -->|git push origin main| B
+    U([🌐 User Browser]) --> N
 
-    B[📦 GitHub Repository\nMain Branch]
-    B --> C
-
-    subgraph CI ["🔄 GitHub Actions CI/CD"]
-        C[🔍 Trigger Workflow\ndeploy.yml]
-        C --> D[🔑 Load SSH Secrets\n& ENV Variables]
-        D --> E[📡 SSH into Server]
+    subgraph APP ["⚡ Application Layer"]
+        N[🔀 Nginx\nReverse Proxy :80]
+        N --> FE[⚛️ React + Vite\nFrontend]
+        N --> BE[🟢 Node.js + Express\nBackend API]
+        BE --> DB[(🍃 MongoDB\nDatabase)]
     end
 
-    subgraph SERVER ["🖥️ Cloud Server - Provisioned via Terraform + Ansible"]
-        E --> F[📥 Pull Latest Code\ngit pull origin main]
-        F --> G[🐳 Docker Compose\ndocker compose up --build]
-        G --> H[🔀 Nginx Proxy\nPort 80]
-        H --> I([⚛️ Frontend\nReact / Vite])
-        H --> J([🟢 Backend API\nNode.js / Express])
-        J --> K([🍃 MongoDB\nDatabase])
+    subgraph INFRA ["🏗️ Infrastructure Layer"]
+        TF[🌍 Terraform\nCloud Provisioning]
+        AN[🤖 Ansible\nServer Configuration]
+        TF --> AN
     end
 
-    K --> L([🌐 Application Live!])
+    subgraph CICD ["🔄 CI/CD Layer"]
+        GH[📦 GitHub Push]
+        GA[⚙️ GitHub Actions]
+        GH --> GA
+        GA -->|SSH + Deploy| APP
+    end
 
-    style CI fill:#1e1b4b,stroke:#7c3aed,color:#e9d5ff
-    style SERVER fill:#052e16,stroke:#16a34a,color:#bbf7d0
-    style A fill:#1e3a5f,stroke:#3b82f6,color:#bfdbfe
-    style L fill:#3b0764,stroke:#a855f7,color:#f3e8ff
+    INFRA -->|Prepares Server| APP
+
+    style APP fill:#0d2137,stroke:#00d4ff,color:#7dd3fc
+    style INFRA fill:#1a0a2e,stroke:#7B42BC,color:#c4b5fd
+    style CICD fill:#0a1f0a,stroke:#16a34a,color:#bbf7d0
 ```
 
 </div>
 
 ---
 
-## 🛠 Tech Stack
+## 🧰 Tech Stack
 
 <div align="center">
 
-| Layer | Technology | Purpose |
-|:------|:----------:|:--------|
-| 🖥️ **Frontend** | ![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB) ![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white) | UI & Fast Bundling |
-| 🔧 **Backend** | ![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat&logo=nodedotjs&logoColor=white) ![Express](https://img.shields.io/badge/Express-000000?style=flat&logo=express&logoColor=white) | REST API Server |
-| 🔐 **Auth** | ![JWT](https://img.shields.io/badge/JWT-000000?style=flat&logo=jsonwebtokens&logoColor=white) | Authentication |
-| 🗄️ **Database** | ![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=flat&logo=mongodb&logoColor=white) | NoSQL Storage |
-| 🔀 **Proxy** | ![Nginx](https://img.shields.io/badge/Nginx-009639?style=flat&logo=nginx&logoColor=white) | Reverse Proxy |
-| 🐳 **Containers** | ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat&logo=docker&logoColor=white) | Containerization |
-| 🌍 **IaC** | ![Terraform](https://img.shields.io/badge/Terraform-7B42BC?style=flat&logo=terraform&logoColor=white) | Cloud Provisioning |
-| 🤖 **Config** | ![Ansible](https://img.shields.io/badge/Ansible-EE0000?style=flat&logo=ansible&logoColor=white) | Server Setup |
-| 🔄 **CI/CD** | ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=flat&logo=github-actions&logoColor=white) | Auto Deployment |
+### 🖥️ Frontend
+
+| Technology | Purpose |
+|:----------:|:--------|
+| ![React](https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB) | UI Component Library |
+| ![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat-square&logo=vite&logoColor=white) | Lightning-fast Bundler |
+| ![Axios](https://img.shields.io/badge/Axios-5A29E4?style=flat-square&logo=axios&logoColor=white) | HTTP Client |
+| ![React Router](https://img.shields.io/badge/React_Router-CA4245?style=flat-square&logo=react-router&logoColor=white) | Client-side Routing |
+
+### 🔧 Backend
+
+| Technology | Purpose |
+|:----------:|:--------|
+| ![Node.js](https://img.shields.io/badge/Node.js-339933?style=flat-square&logo=nodedotjs&logoColor=white) | JavaScript Runtime |
+| ![Express](https://img.shields.io/badge/Express-000000?style=flat-square&logo=express&logoColor=white) | REST API Framework |
+| ![MongoDB](https://img.shields.io/badge/MongoDB-47A248?style=flat-square&logo=mongodb&logoColor=white) | NoSQL Database |
+| ![JWT](https://img.shields.io/badge/JWT-000000?style=flat-square&logo=jsonwebtokens&logoColor=white) | Authentication |
+
+### 🛠️ DevOps
+
+| Technology | Purpose |
+|:----------:|:--------|
+| ![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white) | Containerization |
+| ![Docker Compose](https://img.shields.io/badge/Docker_Compose-2496ED?style=flat-square&logo=docker&logoColor=white) | Multi-container Orchestration |
+| ![Nginx](https://img.shields.io/badge/Nginx-009639?style=flat-square&logo=nginx&logoColor=white) | Reverse Proxy |
+| ![Terraform](https://img.shields.io/badge/Terraform-7B42BC?style=flat-square&logo=terraform&logoColor=white) | Infrastructure as Code |
+| ![Ansible](https://img.shields.io/badge/Ansible-EE0000?style=flat-square&logo=ansible&logoColor=white) | Server Automation |
+| ![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=flat-square&logo=github-actions&logoColor=white) | CI/CD Automation |
 
 </div>
 
@@ -145,188 +178,242 @@ flowchart TD
 dockstack-devops-platform/
 │
 ├── 🟢 backend/
-│   ├── controllers/       ← Route logic & business rules
-│   ├── models/            ← Mongoose schemas
-│   ├── routes/            ← Express route definitions
-│   ├── config/            ← DB config, env setup
-│   └── server.js          ← App entry point
+│   ├── server.js                    ← App entry point
+│   ├── package.json
+│   ├── .env                         ← Environment variables
+│   │
+│   ├── config/
+│   │   └── db.js                    ← MongoDB connection
+│   │
+│   ├── models/
+│   │   ├── User.js                  ← User schema
+│   │   ├── Project.js               ← Project schema
+│   │   └── Deployment.js            ← Deployment schema
+│   │
+│   ├── controllers/
+│   │   ├── authController.js
+│   │   ├── projectController.js
+│   │   └── deploymentController.js
+│   │
+│   ├── middleware/
+│   │   └── authMiddleware.js        ← JWT verification
+│   │
+│   └── routes/
+│       ├── authRoutes.js
+│       ├── projectRoutes.js
+│       └── deploymentRoutes.js
 │
 ├── ⚛️  frontend/
-│   └── src/               ← React components & pages
+│   ├── vite.config.js
+│   └── src/
+│       ├── main.jsx
+│       ├── App.jsx
+│       ├── components/
+│       │   ├── Navbar.jsx
+│       │   ├── Sidebar.jsx
+│       │   └── Loader.jsx
+│       ├── pages/
+│       │   ├── Login.jsx
+│       │   ├── Register.jsx
+│       │   ├── Dashboard.jsx
+│       │   ├── Projects.jsx
+│       │   └── Profile.jsx
+│       ├── services/
+│       │   └── api.js               ← Axios API config
+│       └── context/
+│           └── AuthContext.jsx      ← Global auth state
+│
+├── 🔀 nginx/
+│   └── default.conf                 ← Reverse proxy rules
 │
 ├── 🐳 docker/
 │   ├── Dockerfile.backend
 │   ├── Dockerfile.frontend
-│   └── docker-compose.yml ← Orchestrates all services
-│
-├── 🔀 nginx/
-│   └── default.conf       ← Reverse proxy routing rules
+│   └── docker-compose.yml           ← Orchestrates all services
 │
 ├── 🌍 terraform/
-│   ├── main.tf            ← Cloud resource definitions
-│   └── variables.tf       ← Configurable inputs
+│   ├── main.tf                      ← Cloud resource definitions
+│   └── variables.tf
 │
 ├── 🤖 ansible/
-│   └── setup.yml          ← Installs Docker, Git on server
+│   └── setup.yml                    ← Installs Docker & Git
 │
 └── 🔄 .github/
     └── workflows/
-        └── deploy.yml     ← Auto-deploy on main push
+        └── deploy.yml               ← Auto-deploy on push
 ```
 
 ---
 
-## 🚀 Getting Started
+## ⚙️ Installation & Setup
 
 ### Prerequisites
 
-Make sure the following are installed on your machine:
+> Make sure these are installed before you begin.
 
-![Docker](https://img.shields.io/badge/Docker-Required-2496ED?style=flat&logo=docker&logoColor=white)
-![Node](https://img.shields.io/badge/Node.js-v18+-339933?style=flat&logo=nodedotjs&logoColor=white)
 ![Git](https://img.shields.io/badge/Git-Required-F05032?style=flat&logo=git&logoColor=white)
+![Node](https://img.shields.io/badge/Node.js-v18+-339933?style=flat&logo=nodedotjs&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-Required-2496ED?style=flat&logo=docker&logoColor=white)
 
 ### 1️⃣ Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/dockstack-devops-platform.git
-cd dockstack-devops-platform
+git clone https://github.com/YOUR_USERNAME/DockStack.git
+cd DockStack
 ```
 
-### 2️⃣ Launch with Docker Compose
+### 2️⃣ Backend Setup
 
 ```bash
-docker compose -f docker/docker-compose.yml up --build
+cd backend
+npm install
+npm run dev
 ```
 
-### 3️⃣ Open in Browser
+> 🟢 Backend API running at `http://localhost:5000`
 
-```
-http://localhost
+### 3️⃣ Frontend Setup
+
+```bash
+cd frontend
+npm install
+npm run dev
 ```
 
-> 🟢 All services — Frontend, Backend, MongoDB, and Nginx — start together automatically.
+> ⚛️ Frontend running at `http://localhost:3000`
 
 ---
 
-## 📡 API Endpoints
+## 🐳 Docker Setup
+
+> Run the **entire platform** — Frontend, Backend, MongoDB, and Nginx — with a single command.
+
+```bash
+docker-compose -f docker/docker-compose.yml up --build
+```
 
 <div align="center">
 
-| Method | Endpoint | Description | Auth Required |
-|:------:|:---------|:------------|:-------------:|
-| `GET` | `/api/health` | Health check | ❌ |
-| `POST` | `/api/auth/register` | Register new user | ❌ |
-| `POST` | `/api/auth/login` | Login & get JWT token | ❌ |
+| Container | Service | Port |
+|:----------|:--------|:----:|
+| 🔀 nginx | Reverse Proxy | `80` |
+| ⚛️ frontend | React App | `3000` |
+| 🟢 backend | Express API | `5000` |
+| 🍃 mongo | MongoDB | `27017` |
 
 </div>
 
-**Example Request — Register User:**
-
-```bash
-curl -X POST http://localhost/api/auth/register \
-  -H "Content-Type: application/json" \
-  -d '{"username": "akshat", "password": "securepass123"}'
-```
-
-**Example Response:**
-
-```json
-{
-  "message": "User registered successfully",
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6..."
-}
-```
+> 🌐 Open `http://localhost` in your browser — Nginx routes everything automatically.
 
 ---
 
-## 🌍 Terraform Infrastructure
+## ☁️ Infrastructure Setup (Terraform)
 
 > Provisions a cloud server ready for Docker deployments.
 
 ```bash
-# Step 1 — Initialize Terraform
+# Move into terraform directory
 cd terraform
+
+# Initialize Terraform providers
 terraform init
 
-# Step 2 — Preview infrastructure changes
+# Preview what will be created
 terraform plan
 
-# Step 3 — Apply and create the server
+# Provision the server
 terraform apply
 ```
 
 ```
-terraform apply output:
-  ✅  aws_instance.dockstack_server: Creation complete
-  ✅  Public IP: 54.xxx.xxx.xxx
-  ✅  Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
+✅  Apply complete!
+✅  Resources: 2 added, 0 changed, 0 destroyed.
+✅  Output: server_ip = "xx.xx.xx.xx"
 ```
 
 ---
 
-## 🤖 Ansible Server Configuration
+## 🤖 Server Configuration (Ansible)
 
-> Automatically installs Docker, Git, and other dependencies on your server.
+> Automatically installs and configures Docker on your remote server.
 
 ```bash
-ansible-playbook setup.yml
+ansible-playbook ansible/setup.yml
 ```
 
 ```yaml
-# ansible/setup.yml (overview)
-- Install Docker & Docker Compose
-- Install Git
-- Configure firewall rules
-- Enable Docker service on boot
+# What setup.yml does:
+  ✔  Install Docker & Docker Compose
+  ✔  Install Git
+  ✔  Configure firewall (UFW)
+  ✔  Enable Docker service on boot
 ```
 
 ---
 
-## 🔄 CI/CD Deployment
+## 🔄 CI/CD Pipeline
 
-> Push to `main` → application is live. Zero manual steps.
+> Push to `main` → app is live. **Zero manual steps.**
 
 ```mermaid
 sequenceDiagram
     participant Dev as 👨‍💻 Developer
-    participant GH as 📦 GitHub
-    participant GA as 🔄 GitHub Actions
-    participant SRV as 🖥️ Server
+    participant GH  as 📦 GitHub
+    participant GA  as ⚙️ GitHub Actions
+    participant SRV as 🖥️ Cloud Server
 
     Dev->>GH: git push origin main
-    GH->>GA: Trigger deploy.yml
-    GA->>GA: Load SSH keys & secrets
-    GA->>SRV: SSH connection established
-    SRV->>SRV: git pull latest code
-    SRV->>SRV: docker compose up --build
+    GH->>GA: Trigger deploy.yml workflow
+    GA->>GA: 🔑 Load SSH secrets & ENV
+    GA->>SRV: 📡 SSH into server
+    SRV->>SRV: 📥 git pull latest code
+    SRV->>SRV: 🐳 docker compose up --build
     SRV-->>Dev: ✅ Deployment successful!
 ```
 
 **Required GitHub Secrets:**
 
-| Secret | Description |
-|:-------|:------------|
-| `SSH_PRIVATE_KEY` | Private key for server access |
-| `SERVER_IP` | Your cloud server IP |
-| `SSH_USER` | Server username (e.g. `ubuntu`) |
+| Secret Key | Description |
+|:-----------|:------------|
+| `SSH_PRIVATE_KEY` | Private key for SSH access |
+| `SERVER_IP` | Your cloud server's public IP |
+| `SSH_USER` | Server login user (e.g. `ubuntu`) |
 
 ---
 
-## ✨ Features
+## 🔐 Authentication
+
+> JWT-based authentication secures all protected routes.
+
+```
+POST /api/auth/register   →  Create a new account
+POST /api/auth/login      →  Login & receive JWT token
+GET  /api/projects        →  🔒 Protected (token required)
+GET  /api/deployments     →  🔒 Protected (token required)
+```
+
+```
+Client ──── POST /login ────▶ Server
+             ◀── JWT Token ────
+Client ──── Authorization: Bearer <token> ──▶ Protected Routes
+```
+
+---
+
+## 📊 Features
 
 <div align="center">
 
 | Feature | Status |
 |:--------|:------:|
-| Full Stack Web Application (React + Node.js) | ✅ |
-| Docker Containerization | ✅ |
-| Nginx Reverse Proxy | ✅ |
-| MongoDB Database | ✅ |
-| JWT Authentication | ✅ |
-| Infrastructure as Code (Terraform) | ✅ |
-| Server Configuration (Ansible) | ✅ |
-| Automated CI/CD Deployment | ✅ |
+| 🔐 JWT User Authentication | ✅ Done |
+| 📂 Project Management Dashboard | ✅ Done |
+| 🚀 Deployment Tracking | ✅ Done |
+| 🐳 Dockerized Services | ✅ Done |
+| 🔀 Nginx Reverse Proxy | ✅ Done |
+| 🌍 Infrastructure as Code (Terraform) | ✅ Done |
+| 🤖 Server Automation (Ansible) | ✅ Done |
+| 🔄 CI/CD with GitHub Actions | ✅ Done |
 
 </div>
 
@@ -336,10 +423,11 @@ sequenceDiagram
 
 ```
 🔜  Kubernetes Deployment         — Container orchestration at scale
+🔜  Real-time Deployment Logs     — Live streaming log output
 🔜  Prometheus & Grafana          — Metrics, dashboards & alerting
-🔜  Redis Caching                 — Faster reads, session management
-🔜  HTTPS with Let's Encrypt      — Free SSL/TLS certificates
-🔜  Custom Domain Configuration   — Production-ready URLs
+🔜  GitHub Repository Integration — One-click repo imports
+🔜  Automatic Container Scaling   — Load-based autoscaling
+🔜  Role-Based Access Control     — Fine-grained permissions
 ```
 
 ---
@@ -348,22 +436,56 @@ sequenceDiagram
 
 <div align="center">
 
-<img src="https://avatars.githubusercontent.com/yourusername" width="90" style="border-radius:50%"/>
-
 ### Akshat Srivastava
-*Built with ❤️ and a lot of `docker compose up`*
+
+**B.Tech IT Engineering Student**
+*DevOps & Full Stack Development Enthusiast*
+
+<br/>
+
+[![GitHub](https://img.shields.io/badge/GitHub-Follow-181717?style=for-the-badge&logo=github)](https://github.com/yourusername)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=for-the-badge&logo=linkedin)](https://linkedin.com/in/yourusername)
+
+*Built with ❤️, countless `docker compose up` attempts, and way too much coffee ☕*
 
 </div>
 
 ---
 
+## 🤝 Contributing
+
+Contributions are always welcome! Here's how to get started:
+
+```bash
+# 1. Fork the repository
+# 2. Create your feature branch
+git checkout -b feature/your-feature-name
+
+# 3. Commit your changes
+git commit -m "feat: add your feature"
+
+# 4. Push and open a Pull Request
+git push origin feature/your-feature-name
+```
+
+---
+
+## 📜 License
+
+This project is open-source and available under the **MIT License**.
+
+```
+MIT License — Free to use, modify, and distribute with attribution.
+```
+
+---
+
 <div align="center">
 
-⭐ **If this project helped you, please give it a star!** ⭐
+⭐ **Found this project helpful? Drop a star — it means a lot!** ⭐
 
 <br/>
 
-<!-- BOTTOM WAVE -->
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:24243e,50:302b63,100:0f0c29&height=140&section=footer&text=Happy%20Shipping!&fontSize=28&fontColor=a78bfa&fontAlignY=65&animation=fadeIn" width="100%"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0f3460,40:1a1f35,70:0d1117,100:0a0a0f&height=150&section=footer&text=Keep%20Shipping%20🚀&fontSize=30&fontColor=00d4ff&fontAlignY=65&animation=fadeIn" width="100%"/>
 
 </div>
