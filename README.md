@@ -75,7 +75,7 @@ Modern application deployment involves multiple steps and tools. Managing them m
 | Complex server configuration | High chance of human error |
 | No centralized deployment management | Scattered tools, no visibility |
 | Difficult CI/CD pipeline setup | Slow release cycles |
-| Managing multiple services & environments | Inconsistent deployments |
+
 
 </div>
 
