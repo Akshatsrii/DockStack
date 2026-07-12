@@ -1,11 +1,11 @@
 import axios from "axios"
 
-// Use absolute localhost url when running in local development mode (port 3000), 
-// otherwise use relative path (/api) to route through Nginx reverse proxy.
+// Use environment variable VITE_API_URL if defined, otherwise fall back to local dev or relative routing
 const isLocalDev = window.location.port === "3000" || window.location.port === "5173"
+const baseURL = import.meta.env.VITE_API_URL || (isLocalDev ? "http://localhost:5000/api" : "/api")
 
 const api = axios.create({
-  baseURL: isLocalDev ? "http://localhost:5000/api" : "/api"
+  baseURL
 })
 
 // Request interceptor to add Authorization token
