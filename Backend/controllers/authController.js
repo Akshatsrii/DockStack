@@ -45,7 +45,14 @@ process.env.JWT_SECRET,
 {expiresIn:"1d"}
 )
 
-res.json({token})
+    res.json({
+      token,
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email
+      }
+    })
 
 }catch(error){
 res.status(500).json({error:error.message})
