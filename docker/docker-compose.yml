@@ -2,17 +2,25 @@ services:
 
   backend:
     build:
-      context: ../backend
+      context: ../Backend
       dockerfile: ../docker/Dockerfile.backend
     ports:
       - "5000:5000"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017/dockstack
+      - PORT=5000
+      - JWT_SECRET=dockstacksecret
+    depends_on:
+      - mongo
 
   frontend:
     build:
-      context: ../frontend
+      context: ../Frontend
       dockerfile: ../docker/Dockerfile.frontend
     ports:
       - "3000:3000"
+    depends_on:
+      - backend
 
   nginx:
     image: nginx
@@ -23,3 +31,13 @@ services:
     depends_on:
       - backend
       - frontend
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:

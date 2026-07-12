@@ -22,9 +22,9 @@
 <br/>
 
 <p>
-  <img src="https://img.shields.io/github/stars/yourusername/DockStack?style=social"/>
+  <img src="https://img.shields.io/github/stars/Akshatsrii/DockStack?style=social"/>
   &nbsp;
-  <img src="https://img.shields.io/github/forks/yourusername/DockStack?style=social"/>
+  <img src="https://img.shields.io/github/forks/Akshatsrii/DockStack?style=social"/>
   &nbsp;
   <img src="https://img.shields.io/badge/License-MIT-00d4ff?style=flat"/>
   &nbsp;
@@ -52,9 +52,10 @@
 - [📁 Project Structure](#-project-structure)
 - [⚙️ Installation & Setup](#️-installation--setup)
 - [🐳 Docker Setup](#-docker-setup)
-- [☁️ Infrastructure – Terraform](#️-infrastructure-setup-terraform)
-- [🤖 Server Config – Ansible](#-server-configuration-ansible)
+- [☁️ Infrastructure Setup (Terraform)](#️-infrastructure-setup-terraform)
+- [🤖 Server Configuration (Ansible)](#-server-configuration-ansible)
 - [🔄 CI/CD Pipeline](#-cicd-pipeline)
+- [🚀 Step-by-Step Deployment Guide](#-step-by-step-deployment-guide)
 - [🔐 Authentication](#-authentication)
 - [📊 Features](#-features)
 - [🔮 Future Improvements](#-future-improvements)
@@ -75,7 +76,6 @@ Modern application deployment involves multiple steps and tools. Managing them m
 | Complex server configuration | High chance of human error |
 | No centralized deployment management | Scattered tools, no visibility |
 | Difficult CI/CD pipeline setup | Slow release cycles |
-
 
 </div>
 
@@ -175,9 +175,9 @@ flowchart TD
 ## 📁 Project Structure
 
 ```
-dockstack-devops-platform/
+DockStack/
 │
-├── 🟢 backend/
+├── 🟢 Backend/
 │   ├── server.js                    ← App entry point
 │   ├── package.json
 │   ├── .env                         ← Environment variables
@@ -203,7 +203,7 @@ dockstack-devops-platform/
 │       ├── projectRoutes.js
 │       └── deploymentRoutes.js
 │
-├── ⚛️  frontend/
+├── ⚛️  Frontend/
 │   ├── vite.config.js
 │   └── src/
 │       ├── main.jsx
@@ -211,7 +211,7 @@ dockstack-devops-platform/
 │       ├── components/
 │       │   ├── Navbar.jsx
 │       │   ├── Sidebar.jsx
-│       │   └── Loader.jsx
+│       │   └── ProtectedRoute.jsx
 │       ├── pages/
 │       │   ├── Login.jsx
 │       │   ├── Register.jsx
@@ -229,18 +229,18 @@ dockstack-devops-platform/
 ├── 🐳 docker/
 │   ├── Dockerfile.backend
 │   ├── Dockerfile.frontend
-│   └── docker-compose.yml           ← Orchestrates all services
+│   └── docker-compose.yml           ← Orchestrates Frontend, Backend, MongoDB, Nginx
 │
 ├── 🌍 terraform/
-│   ├── main.tf                      ← Cloud resource definitions
+│   ├── main.tf                      ← Cloud resource definitions (AWS EC2 instance)
 │   └── variables.tf
 │
 ├── 🤖 ansible/
-│   └── setup.yml                    ← Installs Docker & Git
+│   └── setup.yml                    ← Playbook to install & configure Docker
 │
 └── 🔄 .github/
     └── workflows/
-        └── deploy.yml               ← Auto-deploy on push
+        └── deploy.yml               ← CI/CD pipeline (triggers build & SSH deploy)
 ```
 
 ---
@@ -252,35 +252,36 @@ dockstack-devops-platform/
 > Make sure these are installed before you begin.
 
 ![Git](https://img.shields.io/badge/Git-Required-F05032?style=flat&logo=git&logoColor=white)
-![Node](https://img.shields.io/badge/Node.js-v18+-339933?style=flat&logo=nodedotjs&logoColor=white)
+![Node](https://img.shields.io/badge/Node.js-v20+-339933?style=flat&logo=nodedotjs&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-Required-2496ED?style=flat&logo=docker&logoColor=white)
 
 ### 1️⃣ Clone the Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/DockStack.git
+git clone https://github.com/Akshatsrii/DockStack.git
 cd DockStack
 ```
 
-### 2️⃣ Backend Setup
+### 2️⃣ Backend Setup (Local Development)
 
 ```bash
-cd backend
+cd Backend
+npm install
+# Configure local environment in .env
+npm run dev
+```
+
+> 🟢 Backend API running locally at `http://localhost:5000`
+
+### 3️⃣ Frontend Setup (Local Development)
+
+```bash
+cd Frontend
 npm install
 npm run dev
 ```
 
-> 🟢 Backend API running at `http://localhost:5000`
-
-### 3️⃣ Frontend Setup
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-> ⚛️ Frontend running at `http://localhost:3000`
+> ⚛️ Frontend running locally at `http://localhost:3000` (API calls proxied to `http://localhost:5000` automatically)
 
 ---
 
@@ -294,22 +295,22 @@ docker-compose -f docker/docker-compose.yml up --build
 
 <div align="center">
 
-| Container | Service | Port |
-|:----------|:--------|:----:|
-| 🔀 nginx | Reverse Proxy | `80` |
-| ⚛️ frontend | React App | `3000` |
-| 🟢 backend | Express API | `5000` |
-| 🍃 mongo | MongoDB | `27017` |
+| Container | Service | Port | External Port |
+|:----------|:--------|:----:|:-------------:|
+| 🔀 nginx | Reverse Proxy | `80` | `80` |
+| ⚛️ frontend | React App (Vite) | `3000` | `3000` (routed via nginx on 80) |
+| 🟢 backend | Express API | `5000` | `5000` (routed via nginx/api on 80) |
+| 🍃 mongo | MongoDB | `27017` | `27017` |
 
 </div>
 
-> 🌐 Open `http://localhost` in your browser — Nginx routes everything automatically.
+> 🌐 Open `http://localhost` in your browser — Nginx routes all frontend requests and backend `/api` requests automatically.
 
 ---
 
 ## ☁️ Infrastructure Setup (Terraform)
 
-> Provisions a cloud server ready for Docker deployments.
+> Provisions an AWS EC2 server ready for Docker deployments.
 
 ```bash
 # Move into terraform directory
@@ -327,9 +328,9 @@ terraform apply
 
 ```
 ✅  Apply complete!
-✅  Resources: 2 added, 0 changed, 0 destroyed.
-✅  Output: server_ip = "xx.xx.xx.xx"
+✅  Resources: 1 added, 0 changed, 0 destroyed.
 ```
+*Note: Write down the public IP of the newly provisioned instance.*
 
 ---
 
@@ -337,23 +338,29 @@ terraform apply
 
 > Automatically installs and configures Docker on your remote server.
 
+### 1. Create an Inventory File
+Create a file named `ansible/inventory.ini` and add your server details:
+```ini
+[servers]
+your_ec2_public_ip ansible_user=ubuntu ansible_ssh_private_key_file=/path/to/your-key.pem
+```
+
+### 2. Run the Playbook
 ```bash
-ansible-playbook ansible/setup.yml
+ansible-playbook -i ansible/inventory.ini ansible/setup.yml
 ```
 
 ```yaml
 # What setup.yml does:
-  ✔  Install Docker & Docker Compose
-  ✔  Install Git
-  ✔  Configure firewall (UFW)
-  ✔  Enable Docker service on boot
+  ✔  Installs Docker and starts the Docker daemon
+  ✔  Ensures docker starts on server boot
 ```
 
 ---
 
 ## 🔄 CI/CD Pipeline
 
-> Push to `main` → app is live. **Zero manual steps.**
+> Push to the `main` branch → app is deployed to the server automatically. **Zero manual steps.**
 
 ```mermaid
 sequenceDiagram
@@ -364,20 +371,50 @@ sequenceDiagram
 
     Dev->>GH: git push origin main
     GH->>GA: Trigger deploy.yml workflow
-    GA->>GA: 🔑 Load SSH secrets & ENV
-    GA->>SRV: 📡 SSH into server
-    SRV->>SRV: 📥 git pull latest code
-    SRV->>SRV: 🐳 docker compose up --build
-    SRV-->>Dev: ✅ Deployment successful!
+    GA->>GA: 🛠️ Verify Build Locally
+    GA->>SRV: 📡 SSH into server via appleboy/ssh-action
+    SRV->>SRV: 📥 git pull latest changes
+    SRV->>SRV: 🐳 docker-compose down & up --build -d
+    SRV-->>Dev: ✅ Deployment successful & active!
 ```
 
-**Required GitHub Secrets:**
+---
 
-| Secret Key | Description |
-|:-----------|:------------|
-| `SSH_PRIVATE_KEY` | Private key for SSH access |
-| `SERVER_IP` | Your cloud server's public IP |
-| `SSH_USER` | Server login user (e.g. `ubuntu`) |
+## 🚀 Step-by-Step Deployment Guide
+
+Here is how you can deploy your application to a live server step-by-step:
+
+### Step 1: Provision the Server (Terraform)
+1. Navigate to the `terraform/` directory.
+2. Initialize and apply the configuration as shown in the [Infrastructure Setup](#️-infrastructure-setup-terraform) section.
+3. Keep track of the `Public IP` of your new server and download your AWS SSH private key file (`.pem`).
+
+### Step 2: Install Docker on the Server (Ansible)
+1. Add your server's IP address and the path to your SSH private key file (`.pem`) to `ansible/inventory.ini`.
+2. Run the ansible playbook to install Docker:
+   ```bash
+   ansible-playbook -i ansible/inventory.ini ansible/setup.yml
+   ```
+
+### Step 3: Configure GitHub Repository Secrets
+To enable automated deployments via GitHub Actions, go to your GitHub repository settings under **Settings > Secrets and variables > Actions** and add the following repository secrets:
+
+| Secret Name | Value | Example |
+| :--- | :--- | :--- |
+| `SERVER_IP` | The public IP address of your provisioned server | `13.233.111.22` |
+| `SSH_USER` | The default username of your OS image (e.g., Ubuntu) | `ubuntu` |
+| `SSH_PRIVATE_KEY` | The entire text content of your `.pem` SSH private key | `-----BEGIN RSA PRIVATE KEY----- ...` |
+
+### Step 4: Push to Main to Trigger Deploy
+Once your secrets are set up:
+1. Commit any changes to your code.
+2. Push to the main branch:
+   ```bash
+   git add .
+   git commit -m "deploy: configure production"
+   git push origin main
+   ```
+3. GitHub Actions will trigger, SSH into your server, clone the repository, spin up the Docker containers, and set up Nginx reverse proxy routing. Your app will then be accessible at `http://<SERVER_IP>`.
 
 ---
 
@@ -443,7 +480,7 @@ Client ──── Authorization: Bearer <token> ──▶ Protected Routes
 
 <br/>
 
-[![GitHub](https://img.shields.io/badge/GitHub-Follow-181717?style=for-the-badge&logo=github)](https://github.com/yourusername)
+[![GitHub](https://img.shields.io/badge/GitHub-Follow-181717?style=for-the-badge&logo=github)](https://github.com/Akshatsrii)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=for-the-badge&logo=linkedin)](https://linkedin.com/in/yourusername)
 
 *Built with ❤️, countless `docker compose up` attempts, and way too much coffee ☕*

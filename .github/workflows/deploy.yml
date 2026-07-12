@@ -1,22 +1,33 @@
 name: Deploy DockStack
 
 on:
- push:
-  branches:
-   - main
+  push:
+    branches:
+      - main
 
 jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
 
- build:
+    steps:
+    - uses: actions/checkout@v4
 
-  runs-on: ubuntu-latest
+    - name: Build Docker Images (Verify Build)
+      run: docker-compose -f docker/docker-compose.yml build
 
-  steps:
-
-  - uses: actions/checkout@v4
-
-  - name: Build Docker
-    run: docker-compose -f docker/docker-compose.yml build
-
-  - name: Deploy
-    run: echo "Deployment complete"
+    - name: Deploy to Cloud Server via SSH
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.SERVER_IP }}
+        username: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        script: |
+          # Create app directory if not exists and clone repo, or pull latest changes
+          if [ ! -d "~/DockStack" ]; then
+            git clone https://github.com/Akshatsrii/DockStack.git ~/DockStack
+          fi
+          cd ~/DockStack
+          git fetch --all
+          git reset --hard origin/main
+          docker-compose -f docker/docker-compose.yml down --remove-orphans
+          docker-compose -f docker/docker-compose.yml up --build -d
